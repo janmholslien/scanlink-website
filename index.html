@@ -457,6 +457,94 @@
       font-size: 0.95rem;
     }
 
+.pricing-card {
+  max-width: 460px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(57, 217, 138, 0.25);
+  border-radius: 26px;
+  padding: 32px 26px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+    .pricing-card::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -80px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(57,217,138,0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.pricing-badge {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(57, 217, 138, 0.10);
+  border: 1px solid rgba(57, 217, 138, 0.18);
+  color: #c6f8dc;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.pricing-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.price {
+  font-size: clamp(2.6rem, 9vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.price span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pricing-text {
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.pricing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+}
+
+.pricing-list li {
+  color: var(--muted);
+  margin: 10px 0;
+  position: relative;
+  padding-left: 18px;
+}
+
+.pricing-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+
+  .pricing-card p[style] {
+  font-weight: 600;
+}
+
+
+    
     @media (max-width: 940px) {
       .hero-grid,
       .grid-2,
@@ -501,6 +589,7 @@
         <a href="#om">Om Scanlink</a>
         <a href="#fordeler">Fordeler</a>
         <a href="#hvordan">Hvordan det fungerer</a>
+        <a href="#pris">Pris</a>
         <a href="#kontakt" class="btn btn-primary">Kontakt</a>
       </nav>
     </div>
@@ -518,8 +607,8 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#kontakt" class="btn btn-primary">Kom i gang</a>
-            <a href="#sporsmal" class="btn btn-secondary">Se hva siden svarer på</a>
+            <a href="#kontakt" class="btn btn-primary">Få din QR-løsning</a>
+            <a href="#sporsmal" class="btn btn-secondary">Ofte stilte spørsmål</a>
           </div>
 
           <div class="hero-points">
@@ -853,6 +942,41 @@
   </div>
 </section>
 
+
+<section id="pris">
+  <div class="container">
+    <div class="section-intro">
+      <h2>Én enkel løsning</h2>
+      <p>
+        Du får en QR-kode du kan bruke over tid – vi sørger for at den alltid fungerer, selv når behovet ditt endrer seg.
+      </p>
+    </div>
+
+   <div class="pricing-card">
+  <div class="pricing-badge">Gratis oppsett</div>
+
+  <h3>Scanlink</h3>
+
+  <div class="price">99 kr<span>/måned</span></div>
+
+  <p style="font-size:0.9rem; color:#b7c4d7; margin-top:6px;">
+    Ingen bindingstid
+  </p>
+  <p class="pricing-text">
+    Én QR-kode du kan bruke over tid – vi sørger for at den alltid leder riktig.
+  </p>
+
+  <ul class="pricing-list">
+    <li>Fast QR-kode du kan bruke over tid</li>
+    <li>Vi endrer innholdet for deg ved behov</li>
+    <li>Oppdatering innen 24 timer (ofte raskere)</li>
+    <li>Ingen teknisk kunnskap nødvendig</li>
+    <li>Hosting og drift inkludert</li>
+  </ul>
+
+  <a href="#kontakt" class="btn btn-primary">Få din QR-løsning</a>
+</div>
+    
     <section class="cta" id="kontakt">
       <div class="container">
         <div class="cta-box">
@@ -862,7 +986,7 @@
             Vi tar oss av det tekniske – du får en løsning som fungerer fra dag én.
           </p>
           <p style="margin-top:10px; font-size:0.9rem; color:#b7c4d7;">
-            En enkel og rimelig løsning – uten komplisert oppsett.
+            Fra 99 kr / måned – gratis oppsett.
           </p>
           
           <a href="mailto:janholslien@gmail.com" class="btn btn-primary">Få din egen QR-løsning</a>
