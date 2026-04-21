@@ -671,6 +671,42 @@
     font-size: 1.7rem;
   }
 }
+
+.mobile-cta {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-align: center;
+
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #052013;
+  box-shadow: 0 10px 30px rgba(57, 217, 138, 0.25);
+
+  text-decoration: none;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Show ONLY on mobile */
+@media (max-width: 700px) {
+  .mobile-cta {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (max-width: 700px) {
+  body {
+    padding-bottom: 80px;
+  }
+}
     
 </style>
 </head>
@@ -1254,5 +1290,9 @@
   updateGallery();
 </script>
 
+<a href="mailto:janholslien@gmail.com?subject=Forespørsel om Scanlink" class="mobile-cta">
+  Start med Scanlink i dag
+</a>
+  
 </body>
 </html>
