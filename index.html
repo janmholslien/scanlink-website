@@ -537,19 +537,45 @@
   color: var(--accent);
   font-weight: 800;
 }
+
+    .gallery-shell {
+  margin-top: 20px;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 18px;
-  margin-top: 20px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.gallery-grid img {
+.gallery-grid.is-changing {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  background: rgba(255,255,255,0.03);
+}
+
+.gallery-item img {
   width: 100%;
   height: auto;
-  border-radius: 18px;
   display: block;
-  box-shadow: var(--shadow);
+  border-radius: 18px;
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.025);
+  filter: brightness(1.03);
 }
 
 .gallery-controls {
@@ -557,76 +583,95 @@
   display: flex;
   justify-content: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
-.gallery-controls button {
+.gallery-btn {
   padding: 10px 16px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.04);
   color: var(--text);
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.gallery-controls button:hover {
+.gallery-btn:hover {
   background: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
 }
 
-@media (max-width: 700px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 18, 0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 3000;
 }
 
-  .pricing-card p[style] {
-  font-weight: 600;
+.lightbox.open {
+  display: flex;
 }
 
-#kontakt {
-  scroll-margin-top: 110px;
-}
-
-    
-    
-@media (max-width: 940px) {
-  .hero-grid,
-  .grid-2,
-  .grid-3,
-  .question-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .hero {
-    padding-top: 54px;
-  }
-
-  .step {
-    grid-template-columns: 1fr;
-  }
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.gallery-grid img {
-  width: 100%;
-  height: auto;
+.lightbox img {
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
   border-radius: 18px;
-  display: block;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: white;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-prev {
+  left: 18px;
+}
+
+.lightbox-next {
+  right: 18px;
 }
 
 @media (max-width: 700px) {
   .gallery-grid {
     grid-template-columns: 1fr;
   }
+
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1.7rem;
+  }
 }
+    
 </style>
 </head>
 <body>
@@ -660,7 +705,7 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#kontakt" class="btn btn-primary">Få din QR-løsning</a>
+            <a href="mailto:janholslien@gmail.com?subject=Forespørsel om Scanlink" class="btn btn-primary">Få din QR-løsning</a>
             <a href="#sporsmal" class="btn btn-secondary">Ofte stilte spørsmål</a>
           </div>
 
@@ -982,19 +1027,28 @@
     <div class="section-intro">
       <h2>Se Scanlink i bruk</h2>
       <p>
-        Eksempler på hvordan QR-koder kan brukes i praksis – på bord, disker og i butikk.
+        Eksempler på hvordan QR-koder kan brukes i praksis – på bord, disker, biler, butikk og andre miljøer.
       </p>
     </div>
 
-    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-shell">
+      <div class="gallery-grid" id="galleryGrid"></div>
 
-   <div class="gallery-controls">
-  <button type="button" id="prevGalleryBtn">← Forrige</button>
-  <button type="button" id="nextGalleryBtn">Neste →</button>
-</div>
+      <div class="gallery-controls">
+        <button type="button" class="gallery-btn" id="prevGalleryBtn">← Forrige</button>
+        <button type="button" class="gallery-btn" id="nextGalleryBtn">Neste →</button>
+      </div>
+    </div>
   </div>
 </section>
 
+<div class="lightbox" id="lightbox">
+  <button type="button" class="lightbox-close" id="lightboxCloseBtn">×</button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrevBtn">‹</button>
+  <img id="lightboxImage" src="" alt="Galleri bilde">
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNextBtn">›</button>
+</div>
+</section>
 
 <section id="pris">
   <div class="container">
@@ -1068,8 +1122,7 @@
   <footer>
     © 2026 Scanlink.no — En enkel QR-løsning for bedrifter
   </footer>
-  
-<script>
+  <script>
   const images = [
     "images/gallery-1.png",
     "images/gallery-2.png",
@@ -1085,38 +1138,122 @@
   ];
 
   let index = 0;
+  let lightboxIndex = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   function updateGallery() {
     const grid = document.getElementById("galleryGrid");
     grid.innerHTML = "";
 
     for (let i = 0; i < 4; i++) {
-      const img = document.createElement("img");
       const imgIndex = (index + i) % images.length;
+
+      const item = document.createElement("div");
+      item.className = "gallery-item";
+
+      const img = document.createElement("img");
       img.src = images[imgIndex];
       img.alt = "Galleri bilde " + (imgIndex + 1);
       img.loading = "lazy";
-      grid.appendChild(img);
+      img.addEventListener("click", () => openLightbox(imgIndex));
+
+      item.appendChild(img);
+      grid.appendChild(item);
     }
   }
 
+  function animateGalleryChange(callback) {
+    const grid = document.getElementById("galleryGrid");
+    grid.classList.add("is-changing");
+
+    setTimeout(() => {
+      callback();
+      grid.classList.remove("is-changing");
+    }, 220);
+  }
+
   function nextGallery() {
-    index = (index + 4) % images.length;
-    updateGallery();
+    animateGalleryChange(() => {
+      index = (index + 4) % images.length;
+      updateGallery();
+    });
   }
 
   function prevGallery() {
-    index = (index - 4 + images.length) % images.length;
-    updateGallery();
+    animateGalleryChange(() => {
+      index = (index - 4 + images.length) % images.length;
+      updateGallery();
+    });
+  }
+
+  function openLightbox(i) {
+    lightboxIndex = i;
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    lightboxImage.src = images[lightboxIndex];
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function lightboxNext() {
+    lightboxIndex = (lightboxIndex + 1) % images.length;
+    document.getElementById("lightboxImage").src = images[lightboxIndex];
+  }
+
+  function lightboxPrev() {
+    lightboxIndex = (lightboxIndex - 1 + images.length) % images.length;
+    document.getElementById("lightboxImage").src = images[lightboxIndex];
   }
 
   document.getElementById("prevGalleryBtn").addEventListener("click", prevGallery);
-
   document.getElementById("nextGalleryBtn").addEventListener("click", nextGallery);
-  // load first set
+  document.getElementById("lightboxCloseBtn").addEventListener("click", closeLightbox);
+  document.getElementById("lightboxNextBtn").addEventListener("click", lightboxNext);
+  document.getElementById("lightboxPrevBtn").addEventListener("click", lightboxPrev);
+
+  document.getElementById("lightbox").addEventListener("click", function(e) {
+    if (e.target.id === "lightbox") {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", function(e) {
+    const lightbox = document.getElementById("lightbox");
+    if (!lightbox.classList.contains("open")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") lightboxNext();
+    if (e.key === "ArrowLeft") lightboxPrev();
+  });
+
+  document.addEventListener("touchstart", function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  document.addEventListener("touchend", function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchEndX - touchStartX;
+
+    if (Math.abs(diff) < 50) return;
+
+    const lightbox = document.getElementById("lightbox");
+    if (lightbox.classList.contains("open")) {
+      if (diff < 0) {
+        lightboxNext();
+      } else {
+        lightboxPrev();
+      }
+    }
+  });
+
   updateGallery();
 </script>
 
-  
 </body>
 </html>
