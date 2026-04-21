@@ -988,10 +988,10 @@
 
     <div class="gallery-grid" id="galleryGrid"></div>
 
-    <div class="gallery-controls">
-      <button onclick="prevGallery()">← Forrige</button>
-      <button onclick="nextGallery()">Neste →</button>
-    </div>
+   <div class="gallery-controls">
+  <button type="button" id="prevGalleryBtn">← Forrige</button>
+  <button type="button" id="nextGalleryBtn">Neste →</button>
+</div>
   </div>
 </section>
 
@@ -1092,7 +1092,10 @@
 
     for (let i = 0; i < 4; i++) {
       const img = document.createElement("img");
-      img.src = images[(index + i) % images.length];
+      const imgIndex = (index + i) % images.length;
+      img.src = images[imgIndex];
+      img.alt = "Galleri bilde " + (imgIndex + 1);
+      img.loading = "lazy";
       grid.appendChild(img);
     }
   }
@@ -1107,6 +1110,9 @@
     updateGallery();
   }
 
+  document.getElementById("prevGalleryBtn").addEventListener("click", prevGallery);
+
+  document.getElementById("nextGalleryBtn").addEventListener("click", nextGallery);
   // load first set
   updateGallery();
 </script>
