@@ -547,37 +547,43 @@
   scroll-margin-top: 110px;
 }
     
-    @media (max-width: 940px) {
-      .hero-grid,
-      .grid-2,
-      .grid-3,
-      .question-grid {
-        grid-template-columns: 1fr;
-      }
-      
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 54px;
-      }
-
-      .step {
-        grid-template-columns: 1fr;
-      }
-    }
-@media (max-width: 700px) {
-  .gallery-frame {
-    padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
+@media (max-width: 940px) {
+  .hero-grid,
+  .grid-2,
+  .grid-3,
+  .question-grid {
+    grid-template-columns: 1fr;
   }
 
-  .gallery-frame img {
-    border-radius: 14px;
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 54px;
+  }
+
+  .step {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -939,11 +945,11 @@
       </p>
     </div>
 
-    <div class="gallery-frame">
-      <img 
-        src="images/galleri-med-qr-koder.png" 
-        alt="QR koder brukt i kaféer og restauranter"
-      />
+    <div class="gallery-grid">
+      <img src="images/gallery-1.png" alt="QR kode på bord">
+      <img src="images/gallery-2.png" alt="QR kode med mobil">
+      <img src="images/gallery-3.png" alt="QR kode meny">
+      <img src="images/gallery-4.png" alt="QR kode bar">
     </div>
   </div>
 </section>
