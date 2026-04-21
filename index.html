@@ -676,32 +676,42 @@
   position: fixed;
   bottom: 16px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(20px);
   z-index: 2000;
 
   padding: 14px 22px;
   border-radius: 999px;
   font-weight: 700;
   text-align: center;
+  white-space: nowrap;
 
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #052013;
   box-shadow: 0 10px 30px rgba(57, 217, 138, 0.25);
 
-  text-decoration: none;
-
   opacity: 0;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
 }
 
-/* Show ONLY on mobile */
-@media (max-width: 700px) {
+.mobile-cta.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mobile-cta.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(20px);
+}
+
+@media (min-width: 701px) {
   .mobile-cta {
-    opacity: 1;
-    pointer-events: auto;
+    display: none;
   }
 }
+
 @media (max-width: 700px) {
   body {
     padding-bottom: 80px;
@@ -1157,7 +1167,8 @@
   <footer>
     © 2026 Scanlink.no — En enkel QR-løsning for bedrifter
   </footer>
-  <script>
+  
+<script>
   const images = [
     "images/gallery-1.png",
     "images/gallery-2.png",
@@ -1290,9 +1301,43 @@
   updateGallery();
 </script>
 
-<a href="mailto:janholslien@gmail.com?subject=Forespørsel om Scanlink" class="mobile-cta">
+<a href="mailto:janholslien@gmail.com?subject=Forespørsel om Scanlink" class="mobile-cta" id="mobileCta">
   Start med Scanlink i dag
 </a>
-  
+
+<script>
+  const mobileCta = document.getElementById("mobileCta");
+  let lastScrollY = window.scrollY;
+
+  function handleMobileCta() {
+    if (window.innerWidth > 700 || !mobileCta) return;
+
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY < 80) {
+      mobileCta.classList.add("show");
+      mobileCta.classList.remove("hide");
+    } else if (currentScrollY > lastScrollY) {
+      mobileCta.classList.remove("show");
+      mobileCta.classList.add("hide");
+    } else {
+      mobileCta.classList.add("show");
+      mobileCta.classList.remove("hide");
+    }
+
+    lastScrollY = currentScrollY;
+  }
+
+  window.addEventListener("scroll", handleMobileCta);
+
+  window.addEventListener("load", () => {
+    if (window.innerWidth <= 700 && mobileCta) {
+      setTimeout(() => {
+        mobileCta.classList.add("show");
+        mobileCta.classList.remove("hide");
+      }, 1200);
+    }
+  });
+</script>
 </body>
 </html>
