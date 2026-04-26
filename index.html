@@ -217,6 +217,7 @@
       box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
+      min-height: 520px;
     }
 
     .showcase::after {
@@ -823,7 +824,7 @@
         <div class="phone-shell">
           <div class="phone-top">scanlink.no/home</div>
           <div class="qr-box real-qr">
-            <img src="images/qr-code.png" alt="QR-kode for scanlink.no/home" />
+            <img src="images/qr-code.png" alt="QR-kode for scanlink.no/home" width="600" height="600" />
           </div>
 
           <div class="panel">
@@ -1311,5 +1312,12 @@
 
   revealElements.forEach((el) => revealObserver.observe(el));
 </script>
+
+<script>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+</script>
+  
 </body>
 </html>
